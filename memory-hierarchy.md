@@ -8,8 +8,8 @@
 - **Access Time**: Time between when a read is requested and when the desired word arrives.
 - **Cycle Time**: Minimum time between unrelated requests to memory
 - **DRAM**: Dynamic RAM
-- **SRAM**: Static DRAM
-  _Note: Since 1975, virtually all computers have used DRAM for main memory and SRAM for caches._
+- **SRAM**: Static DRAM </br>
+_Note: Since 1975, virtually all computers have used DRAM for main memory and SRAM for caches._
 - **SDRAM**: Synchronous DRAM (Added clock)
 - **Hard errors/permanent faults**: occur during fabricatino, as well as from a circuit change during operation (e.g., failure of a Flash memory cell after many writes). 
 - **Soft errors/transient faults**: also known as _dynamic errors_, are changes to a cell's contents, not a change in the circuitry. They can be detected by parity bits and detected and fixed by error correcting codes (ECC).
