@@ -53,7 +53,6 @@ Differences with standard DRAM:
 
 Virutal memory addresses do **NOT** have the same structure as physical addresses. Virutal memory addresses are split in 2, with the upper bits being the Virtual Page Number (from the Page Table) and the remaining bits being the Page offset (to the requested byte/word in the page). 
 
-
-## Virutal Machines
+Good illustration of the aliasing problem of VIVT (Virtually Indexed Virtually Tagged) caches: https://www.youtube.com/watch?v=Tg6ID2uWjuY
 
 
