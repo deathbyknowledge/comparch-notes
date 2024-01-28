@@ -50,8 +50,7 @@ Every RISC V instruction can be implemented in, at most, 5 clock cycles:
     _Operation_ - The ALU adds the NPC to the sign-extended immediate vlaue in Imm, which is shifted left by 2 bits to create a word offset, to compute the address of the branch target. Register A, which has been read in the prior cycle, is checked to determine wheter the branch is taken, by comparison with Register B, because we consider only branch equal. 
     The load-store architecture of RISC V means that effective address and execution cycles can be combined into a single clock cycle, because no instruction needs to simultaneously calcuate a data address, calculate an instruction target address, and perform an operation on the data. The other integer instructions not included herein are jumps of various forms, which are similar to branches.
 
-4. _Memory access/branch completion cycle_ (MEM):
-  </br>
+4. _Memory access/branch completion cycle_ (MEM):<br>
   The PC is updated for all instruction: `PC <- NPC;`
   - Memory referenche:
     ```
