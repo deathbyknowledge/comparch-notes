@@ -5,6 +5,8 @@ Pipelining is muck like an assembly line. Because the processor works on differe
 
 
 ## Implementing a Pipeline for RISC V
+
+### Unpiplined RISC V Instructions
 Every RISC V instruction can be implemented in, at most, 5 clock cycles:
 1. _Instruction fetch cycle_ (IF):
   ```
@@ -52,7 +54,7 @@ Every RISC V instruction can be implemented in, at most, 5 clock cycles:
 
 4. _Memory access/branch completion cycle_ (MEM):<br>
   The PC is updated for all instruction: `PC <- NPC;`
-  - Memory referenche:
+  - Memory reference:
     ```
     LMD <- Mem[ALUOutput] or
     Mem[ALUOutput] <- B;
@@ -73,3 +75,19 @@ Every RISC V instruction can be implemented in, at most, 5 clock cycles:
     Regs[rd] <- LMD;
     ```
   _Operation_ - Write the result into the register file, whether it comes from the memory system (which is in LMD) or from the ALU (which is in ALUOutput) with rd designating the register. 
+
+### Pipelined RISC V Instructions
+We can pipeline the instructions with almost no changes by starting a new instruction on each clock cycle. Because every pipe stage is active on every clock cycle, all operations in a pipe stage must complete in 1 clock cycle and any combination of operations must be able to occur at once. Futhermore, pipelining it requires that values passed from one pipe stage to the next must be placed in registers, called _pipeline registers_ or _pipeline latches_.  They are IF/ID, ID/EX, EX/MEM, MEM/WB.
+
+The process of letting an instruction move from the instruction decode stage (ID) into the execution stage (EX) of this pipeline is usually called instruction issue; an instruction that has made this step is said to have issued. For the RISC V integer pipeline, all the data hazards can be checked during the ID phase of the pipeline. If a data hazard exists, the instruction is stalled before it is issued.
+
+
+### Dynamically Scheduled Pipelines
+Simple pipelines fetch an instruction and issue it, unless there is a data dependence between an instruction already in the pipleine and the fetched instruction that can not be hidden with bypassing or forwarding.
+
+Dynamic Scheduling is an apprach whereby the hardare rearranges the instruction execution to reduce the stalls. To implement _out-of-order_ execution (which implies out-of-order execution), we must split the ID pipe stage into two stages:
+1. _Issue_ - Decode instructions, check for structural hazards. 
+2. _Read opearnds_ - Wait until no data hazards, then read operands.
+
+_Scoreboarding_ is a technique for allowing instructions to execute out of order when there are suffcicient resources and no data dependences. The goal of a scoreboard is to maintain an execution rate of one instruction per clock cycle (when no structural hazards are present) by executing an instruction as realy as possible. Thus, when the next instruction to execute is stalled, other instructions can be issued and executed if they do not depend on any active or stalled instruction.
+The scoreboard takes full responsibility for instruction issue and execution, including all hazard detection.
